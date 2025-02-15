@@ -76,8 +76,8 @@ export default function AccountPage() {
 
       {/* 진행 상태 바 */}
       <div className="mt-3 w-full flex">
-        <div className="h-1 w-1/3 bg-orange-500 rounded"></div>
-        <div className="h-1 w-1/3 bg-orange-500 rounded mx-1"></div>
+      <div className="h-1 w-1/3 bg-gray-300 rounded"></div>
+      <div className="h-1 w-1/3 bg-gray-300 rounded"></div>
         <div className="h-1 w-1/3 bg-orange-500 rounded"></div>
       </div>
 
@@ -116,12 +116,13 @@ export default function AccountPage() {
 
       {/* 확인 버튼 */}
       <button
-        className="w-full mt-6 bg-orange-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-orange-600 transition"
-        disabled={!id || !password || loading}
-        onClick={handleRegister}
-      >
-        {loading ? "가입 중..." : "확인"}
-      </button>
+  className="w-full mt-6 bg-primary text-white py-3 rounded-lg text-lg font-semibold hover:bg-opacity-80 transition"
+  disabled={!id || !password || loading}
+  onClick={handleRegister}
+>
+  {loading ? "가입 중..." : "확인"}
+</button>
+
     </div>
   );
 }

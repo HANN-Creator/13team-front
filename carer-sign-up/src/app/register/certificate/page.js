@@ -1,36 +1,50 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { FiUpload } from 'react-icons/fi';
+import { useRouter } from 'next/navigation';
+import CheckIcon from '../../CheckIcon';
 
-export default function selectiveInformationPage() {
+export default function CertificationPage() {
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const [role, setRole] = useState('');
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [selectedAddress, setSelectedAddress] = useState(null);
-    const [period, setPeriod] = useState('');
-    const [certificate, setCertificate] = useState('');
-  
-    // URL에서 이름, 전화번호, 거주지 가져오기
-    useEffect(() => {
-      const roleFromParams = searchParams.get('role');
-      const nameFromParams = searchParams.get('name');
-      const phoneFromParams = searchParams.get('phone');
-      const residenceFromParams = searchParams.get('residence');
-      if (roleFromParams) setRole(decodeURIComponent(roleFromParams));
-      if (nameFromParams) setName(decodeURIComponent(nameFromParams));
-      if (phoneFromParams) setPhone(decodeURIComponent(phoneFromParams));
-      if (residenceFromParams) setSelectedAddress(decodeURIComponent(residenceFromParams).split('%20'));  // 시, 구, 동으로 분리
-    }, [searchParams]);
+    const [certNumber, setCertNumber] = useState('');
+    const [uploadedImage, setUploadedImage] = useState(null);
+    const [hasNurseCert, setHasNurseCert] = useState(false);
+    const [selectedNurseLevel, setSelectedNurseLevel] = useState(null);
+    const [hasSocialWorkerCert, setHasSocialWorkerCert] = useState(false);
 
-  // 다음 단계로 이동 (가입 성공 페이지)
-  const handleNext = () => {
-    if (certificate.trim()) {
-      router.push(`/register/account?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&certificate=${encodeURIComponent(certificate)}`);
+    const formatCertNumber = (value) => {
+      // 숫자만 남기기
+      const onlyNums = value.replace(/\D/g, '');
+      
+      // "20XX-XXXXXXX" 형식 적용
+      if (onlyNums.length <= 4) {
+        return onlyNums; // 20XX (입력 중)
+      } else {
+        return onlyNums.slice(0, 4) + '-' + onlyNums.slice(4, 11); // 20XX-XXXXXXX
+      }
+    };
+    
+    const handleCertNumberChange = (event) => {
+      const formattedValue = formatCertNumber(event.target.value);
+      setCertNumber(formattedValue);
+    };
+
+    const handleImageUpload = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        setUploadedImage(URL.createObjectURL(file));
+      }
     }
-  };
+
+    // 다음 단계로 이동 (가입 성공 페이지)
+    const handleNext = () => {
+      if (!certNumber || !uploadedImage) {
+        alert('자격증을 입력해주세요.');
+        return;
+      }
+      router.push('/register/success');
+    };
 
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-4">
@@ -40,11 +54,6 @@ export default function selectiveInformationPage() {
           ←
         </button>
         <p className="text-lg font-bold text-gray-600">회원가입</p>
-        <button onClick={() => {
-            router.push(`/register/success?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&residence=${encodeURIComponent(selectedAddress)}`)
-            }} className="absolute right-0 text-gray-400 text-md">
-          건너뛰기
-        </button>
       </div>
 
       {/* 진행 상태 바 */}
@@ -55,29 +64,84 @@ export default function selectiveInformationPage() {
       </div>
 
       {/* 타이틀 */}
-      <h2 className="mt-6 text-2xl font-bold text-gray-600">필수는 아니지만 입력하면 좋은 정보들이에요!</h2>
-      <p className="text-gray-500 mt-2">나중에 작성하고 싶으시다면 건너뛰기를 눌러주세요.</p>
+      <p className="text-gray-500 mt-6">마지막 단계예요!</p>
+      <h2 className="mt-3 text-2xl font-bold text-gray-600">소유하고 계신 자격증을 입력해주세요.</h2>
 
-      {/* 자격증 입력 필드 */}
-      <div className="mt-6">
-        <label className="block text-sm font-medium text-gray-600">자격증</label>
+      <form onSubmit={handleNext}>
+        {/* 요양 보호사 자격증 번호 입력 필드 */}
+        <div className="mt-8">
+          <label className="block font-medium text-gray-500">요양 보호사 자격증 번호(필수)</label>
+          <input
+            type="text"
+            placeholder="20xx-xxxxxxx 형식으로 입력해주세요."
+            value={certNumber}
+            onChange={handleCertNumberChange}
+            className="w-full p-3 border border-gray-200 placeholder-gray-400 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
+            maxLength={12}
+          />
+
+          {/* 자격증 사진 업로드 */}
+          <p className="mt-6 font-medium text-gray-500">인증을 위해 자격증 사진을 업로드 해주세요.</p>
+          <label className="mt-2 flex flex-col items-center justify-center w-full h-40 border-gray-70 rounded-lg cursor-pointer bg-gray-70">
+            {uploadedImage ? (
+              <img src={uploadedImage} alt="자격증 미리보기" className="h-full object-cover" />
+            ) : (
+              <div className="flex flex-col items-center">
+                <FiUpload className="text-orange text-2xl" />
+                <span className="mt-2 text-orange font-semibold">사진 업로드하기 +</span>
+              </div>
+            )}
+            <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
+          </label>
+
+          {/* 자격증 선택 */}
+          <div className="mt-6">
+            <p className="font-medium text-gray-500">간호조무사 자격증 보유</p>
+            <button
+              className={`ml-auto w-8 h-8 rounded-full border ${
+                hasNurseCert ? 'stroke-orange' : 'stroke-gray-300'
+              }`}
+              onClick={() => setHasNurseCert(!hasNurseCert)}
+            >
+              {hasSocialWorkerCert && <CheckIcon />}
+            </button>
+
+            <div className="flex gap-3 mt-2">
+              {['1급', '2급'].map((level) => (
+                <button
+                  key={level}
+                  className={`px-20 py-2 rounded-full border ${
+                    selectedNurseLevel === level ? 'bg-orange text-white' : 'bg-white text-gray-600'
+                  }`}
+                  onClick={() => setSelectedNurseLevel(level)}
+                >
+                  {level}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 flex items-center">
+            <p className="font-medium text-gray-500">사회복지사 자격증 보유</p>
+            <button
+              className={`ml-auto w-8 h-8 rounded-full border ${
+                hasSocialWorkerCert ? 'stroke-orange' : 'stroke-gray-300'
+              }`}
+              onClick={() => setHasSocialWorkerCert(!hasSocialWorkerCert)}
+            >
+              {hasSocialWorkerCert && <CheckIcon />}
+            </button>
+          </div>
+        </div>
+
+        {/* 확인 버튼 */}
         <input
-          type="text"
-          placeholder="자격증을 입력해주세요."
-          value={certificate}
-          onChange={(e) => setCertificate(e.target.value)}
-          className="w-full p-3 border border-gray-200 placeholder-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
+          type="submit"
+          className="w-full mt-6 bg-orange text-white py-3 rounded-lg text-lg font-semibold"
+          value="회원가입 완료하기"
+          style={{ cursor: 'pointer' }}
         />
-      </div>
-
-      {/* 확인 버튼 */}
-      <button
-        className="w-full mt-6 bg-orange text-white py-3 rounded-lg text-lg font-semibold"
-        disabled={!certificate}
-        onClick={handleNext} // 클릭 시 가입 성공 페이지로 이동
-      >
-        확인
-      </button>
+      </form>
     </div>
   );
 }

@@ -1,4 +1,3 @@
-import { GrPaypal } from "react-icons/gr";
 import type { Config } from "tailwindcss";
 
 export default {
@@ -15,6 +14,7 @@ export default {
         'orange': "#FF8B14",
         'gray': {
           50: "#f9fafb", //background
+          70: "#f9f9f9", //background
           100: "#f3f4f6", //background
           200: "#D9D9D9", //border
           300: "#CBCBD1", //process bar

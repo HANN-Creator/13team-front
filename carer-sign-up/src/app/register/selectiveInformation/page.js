@@ -39,10 +39,10 @@ export default function selectiveInformationPage() {
         <button onClick={() => router.back()} className="absolute left-0 text-gray-600 text-lg">
           ←
         </button>
-        <p className="text-lg font-bold">회원가입</p>
+        <p className="text-lg font-bold text-gray-600">회원가입</p>
         <button onClick={() => {
             router.push(`/register/success?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&residence=${encodeURIComponent(selectedAddress)}`)
-            }} className="absolute right-0 text-gray-600 text-md">
+            }} className="absolute right-0 text-gray-400 text-md">
           건너뛰기
         </button>
       </div>
@@ -55,18 +55,18 @@ export default function selectiveInformationPage() {
       </div>
 
       {/* 타이틀 */}
-      <h2 className="mt-6 text-2xl font-bold text-gray-900">필수는 아니지만 입력하면 좋은 정보들이에요!</h2>
-      <p className="text-gray-600 mt-2">나중에 작성하고 싶으시다면 건너뛰기를 눌러주세요.</p>
+      <h2 className="mt-6 text-2xl font-bold text-gray-600">필수는 아니지만 입력하면 좋은 정보들이에요!</h2>
+      <p className="text-gray-500 mt-2">나중에 작성하고 싶으시다면 건너뛰기를 눌러주세요.</p>
 
       {/* 직책 입력 필드 */}
       <div className="mt-6">
-        <label className="block text-sm font-medium text-gray-700">경력 기간</label>
+        <label className="block text-sm font-medium text-gray-500">경력 기간</label>
         <input
           type="text"
           placeholder="경력 기간을 입력해주세요. (예: 2년)"
           value={period}
           onChange={(e) => setPeriod(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
+          className="w-full p-3 border border-gray-200 placeholder-gray-400 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
         />
       </div>
 

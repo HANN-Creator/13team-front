@@ -48,7 +48,7 @@ export default function ResidencePage() {
         <button onClick={() => router.back()} className="absolute left-0 text-gray-600 text-lg">
           ←
         </button>
-        <p className="text-lg font-bold">회원가입</p>
+        <p className="text-lg font-bold text-gray-600">회원가입</p>
       </div>
 
       {/* 진행 상태 바 */}
@@ -59,10 +59,10 @@ export default function ResidencePage() {
       </div>
 
       {/* 타이틀 */}
-      <h2 className="mt-6 text-2xl font-bold text-gray-900">
+      <h2 className="mt-6 text-2xl font-bold text-gray-600">
         어느 지역에 거주 중이신가요?
       </h2>
-      <p className="text-gray-600 mt-2">거주지 근처의 센터를 추천해 드릴게요.</p>
+      <p className="text-gray-500 mt-2">거주지 근처의 센터를 추천해 드릴게요.</p>
 
       {/* 검색 입력창 */}
       <div className="mt-6 relative">
@@ -72,7 +72,7 @@ export default function ResidencePage() {
           placeholder="도로명주소 또는 우편번호를 입력해 주세요."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full p-3 pl-12 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange"
+          className="w-full p-3 pl-12 border border-gray-200 placeholder-gray-400 rounded-full focus:outline-none focus:ring-2 focus:ring-orange"
         />
       </div>
 
@@ -85,8 +85,8 @@ export default function ResidencePage() {
               className="p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-100 transition"
               onClick={() => handleSelectAddress(adr)}
             >
-              <p className="text-sm text-gray-600">도로명주소 <span className="pl-2 text-lg font-bold text-black">{adr.address}</span></p>
-              <p className="text-sm text-gray-600">우편번호 <span className="pl-6 text-sm text-black">{adr.post}</span></p>
+              <p className="text-sm text-gray-350">도로명주소 <span className="pl-2 text-lg font-bold text-black">{adr.address}</span></p>
+              <p className="text-sm text-gray-350">우편번호 <span className="pl-6 text-sm text-black">{adr.post}</span></p>
             </div>
           ))}
         </div>
@@ -96,10 +96,10 @@ export default function ResidencePage() {
       {showModal && selectedAddress && (
         <div className="fixed inset-0 flex items-end justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-t-2xl shadow-lg w-full max-w-md">
-            <p className="text-lg font-semibold mb-4">아래의 지역에 거주하시는 게 맞나요?</p>
+            <p className="text-lg font-semibold mb-4 text-gray-600">아래의 지역에 거주하시는 게 맞나요?</p>
             <div className="p-4 border rounded-md">
-              <p className="text-sm text-gray-600">도로명주소 <span className="pl-2 text-lg font-bold text-black">{selectedAddress.address}</span></p>
-              <p className="text-sm text-gray-600">우편번호 <span className="pl-6 text-sm text-black ">{selectedAddress.post}</span></p>
+              <p className="text-sm text-gray-350">도로명주소 <span className="pl-2 text-lg font-bold text-gray-600">{selectedAddress.address}</span></p>
+              <p className="text-sm text-gray-350">우편번호 <span className="pl-6 text-sm text-gray-600">{selectedAddress.post}</span></p>
             </div>
             <div className="flex justify-between mt-4">
               <button
@@ -113,7 +113,7 @@ export default function ResidencePage() {
                 맞아요
               </button>
               <button
-                className="w-1/2 bg-gray-300 text-gray-700 py-3 rounded-lg font-semibold"
+                className="w-1/2 bg-gray-200 text-gray-400 py-3 rounded-lg font-semibold"
                 onClick={() => setShowModal(false)}
               >
                 아니에요

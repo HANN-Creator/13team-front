@@ -56,7 +56,7 @@ export default function PhonePage() {
         <button onClick={() => router.back()} className="absolute left-0 text-gray-600 text-lg">
           ←
         </button>
-        <p className="text-lg font-bold">회원가입</p>
+        <p className="text-lg font-bold text-gray-600">회원가입</p>
       </div>
 
       {/* 진행 상태 바 */}
@@ -67,30 +67,31 @@ export default function PhonePage() {
       </div>
 
       {/* 타이틀 */}
-      <h2 className="mt-6 text-2xl font-bold text-gray-900">전화번호가 어떻게 되세요?</h2>
-      <p className="text-gray-600 mt-2">센터 관리자분들이 필요로 하시는 정보를 받아볼게요.</p>
+      <h2 className="mt-6 text-2xl font-bold text-gray-600">전화번호가 어떻게 되세요?</h2>
+      <p className="text-gray-500 mt-2">센터 관리자분들이 필요로 하시는 정보를 받아볼게요.</p>
 
       {/* 전화번호 입력 필드 */}
       <div className="mt-6">
-        <label className="block text-sm font-medium text-gray-700">전화번호</label>
         <input
           type="tel"
           placeholder="전화번호를 입력해주세요"
           value={phone}
           onChange={handlePhoneChange}
           maxLength="13"
-          className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
         />
       </div>
+          <label className="block text-sm font-medium text-gray-500">전화번호</label>
+            className="w-full p-3 border border-gray-200 placeholder-gray-400 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
 
       {/* 이름 필드 (읽기 전용) */}
       <div className="mt-4">
-        <label className="block text-sm font-medium text-gray-700">이름</label>
+          <label className="block text-sm font-medium text-gray-500">이름</label>
+            className="w-full p-3 border border-gray-200 rounded-lg mt-2 bg-gray-100 text-gray-400"
         <input
           type="text"
           value={name}
           readOnly
-          className="w-full p-3 border border-gray-300 rounded-lg mt-2 bg-gray-100 text-gray-500"
+          className="w-full mt-6 bg-orange text-white py-3 rounded-lg text-lg font-semibold"
         />
       </div>
 

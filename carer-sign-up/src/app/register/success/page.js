@@ -31,8 +31,8 @@ export default function SuccessPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white px-6 text-center">
       {/* 성공 메시지 */}
-      <h2 className="text-3xl font-bold text-gray-900">축하드려요,</h2>
-      <h2 className="text-3xl font-bold text-gray-900 mt-2">가입이 완료되었습니다!</h2>
+      <h2 className="text-3xl font-bold text-gray-600">축하드려요,</h2>
+      <h2 className="text-3xl font-bold text-gray-600 mt-2">가입이 완료되었습니다!</h2>
 
 
       {/* 돌아보기 버튼 */}

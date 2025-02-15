@@ -62,10 +62,10 @@ export default function ResidencePage() {
       <h2 className="mt-6 text-2xl font-bold text-gray-600">
         어느 지역에 거주 중이신가요?
       </h2>
-      <p className="text-gray-500 mt-2">거주지 근처의 센터를 추천해 드릴게요.</p>
+      <p className="text-gray-500 mt-3">거주지 근처의 센터를 추천해 드릴게요.</p>
 
       {/* 검색 입력창 */}
-      <div className="mt-6 relative">
+      <div className="mt-8 relative">
         <FiSearch className="absolute left-4 top-3 text-gray-400 text-xl" />
         <input
           type="text"

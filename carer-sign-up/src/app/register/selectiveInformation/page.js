@@ -41,7 +41,7 @@ export default function selectiveInformationPage() {
         </button>
         <p className="text-lg font-bold text-gray-600">회원가입</p>
         <button onClick={() => {
-            router.push(`/register/success?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&residence=${encodeURIComponent(selectedAddress)}`)
+            router.push(`/register/certificate?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&residence=${encodeURIComponent(selectedAddress)}`)
             }} className="absolute right-0 text-gray-400 text-md">
           건너뛰기
         </button>
@@ -56,10 +56,10 @@ export default function selectiveInformationPage() {
 
       {/* 타이틀 */}
       <h2 className="mt-6 text-2xl font-bold text-gray-600">필수는 아니지만 입력하면 좋은 정보들이에요!</h2>
-      <p className="text-gray-500 mt-2">나중에 작성하고 싶으시다면 건너뛰기를 눌러주세요.</p>
+      <p className="text-gray-500 mt-3">나중에 작성하고 싶으시다면 건너뛰기를 눌러주세요.</p>
 
       {/* 직책 입력 필드 */}
-      <div className="mt-6">
+      <div className="mt-8">
         <label className="block text-sm font-medium text-gray-500">경력 기간</label>
         <input
           type="text"

@@ -37,7 +37,7 @@ export default function SuccessPage() {
 
       {/* 돌아보기 버튼 */}
       <button
-        className="w-full max-w-md mt-6 bg-orange-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-orange-600 transition"
+        className="w-full max-w-md mt-6 bg-orange text-white py-3 rounded-lg text-lg font-semibold"
         onClick={() => router.push('/login')} // 로그인 페이지 또는 메인 페이지로 이동
       >
         둘러보기

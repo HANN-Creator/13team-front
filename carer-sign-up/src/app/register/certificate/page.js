@@ -51,7 +51,7 @@ export default function selectiveInformationPage() {
       <div className="mt-3 w-full flex">
         <div className="h-1 w-1/3 bg-gray-300 rounded"></div>
         <div className="h-1 w-1/3 bg-gray-300 rounded mx-1"></div>
-        <div className="h-1 w-1/3 bg-orange-500 rounded"></div>
+        <div className="h-1 w-1/3 bg-orange rounded"></div>
       </div>
 
       {/* 타이틀 */}
@@ -66,13 +66,13 @@ export default function selectiveInformationPage() {
           placeholder="자격증을 입력해주세요."
           value={certificate}
           onChange={(e) => setCertificate(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+          className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
         />
       </div>
 
       {/* 확인 버튼 */}
       <button
-        className="w-full mt-6 bg-orange-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-orange-600 transition"
+        className="w-full mt-6 bg-orange text-white py-3 rounded-lg text-lg font-semibold"
         disabled={!certificate}
         onClick={handleNext} // 클릭 시 가입 성공 페이지로 이동
       >

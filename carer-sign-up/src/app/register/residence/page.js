@@ -54,7 +54,7 @@ export default function ResidencePage() {
       {/* 진행 상태 바 */}
       <div className="mt-3 w-full flex">
         <div className="h-1 w-1/3 bg-gray-300 rounded"></div>
-        <div className="h-1 w-1/3 bg-orange-500 rounded mx-1"></div>
+        <div className="h-1 w-1/3 bg-orange rounded mx-1"></div>
         <div className="h-1 w-1/3 bg-gray-300 rounded"></div>
       </div>
 
@@ -72,7 +72,7 @@ export default function ResidencePage() {
           placeholder="도로명주소 또는 우편번호를 입력해 주세요."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full p-3 pl-12 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500"
+          className="w-full p-3 pl-12 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange"
         />
       </div>
 
@@ -103,7 +103,7 @@ export default function ResidencePage() {
             </div>
             <div className="flex justify-between mt-4">
               <button
-                className="w-1/2 bg-orange-500 text-white py-3 rounded-lg font-semibold mr-2"
+                className="w-1/2 bg-orange text-white py-3 rounded-lg font-semibold mr-2"
                 onClick={() => {
                   setShowModal(false);
                   const nextUrl = `/register/selectiveInformation?role=${encodeURIComponent(role)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&residence=${encodeURIComponent(selectedAddress.address)}`;

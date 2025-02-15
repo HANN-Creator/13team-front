@@ -62,7 +62,7 @@ export default function PhonePage() {
       {/* 진행 상태 바 */}
       <div className="mt-3 w-full flex">
       <div className="h-1 w-1/3 bg-gray-300 rounded"></div>
-      <div className="h-1 w-1/3 bg-orange-500 rounded mx-1"></div>
+      <div className="h-1 w-1/3 bg-orange rounded mx-1"></div>
         <div className="h-1 w-1/3 bg-gray-300 rounded"></div>
       </div>
 
@@ -79,7 +79,7 @@ export default function PhonePage() {
           value={phone}
           onChange={handlePhoneChange}
           maxLength="13"
-          className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+          className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
         />
       </div>
 
@@ -96,7 +96,7 @@ export default function PhonePage() {
 
       {/* 확인 버튼 */}
       <button
-        className="w-full mt-6 bg-orange-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-orange-600 transition"
+        className="w-full mt-6 bg-orange text-white py-3 rounded-lg text-lg font-semibold"
         disabled={phone.length < 13}
         onClick={handleNext}
       >

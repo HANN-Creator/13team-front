@@ -12,7 +12,7 @@ export default function OnboardingPage() {
         <h1 className="text-3xl font-extrabold text-gray-900 leading-tight">
           <span className="block">돌봄과 정성을 잇는</span>
           <span className="block">따뜻한 물결,</span>
-          <span className="font-extrabold text-orange-500">로고</span>
+          <span className="font-extrabold text-orange">로고</span>
         </h1>
       </div>
 
@@ -47,7 +47,7 @@ export default function OnboardingPage() {
       <div className="mt-8">
         <p className="text-sm text-gray-600 text-center mb-2">이미 회원이신가요?</p>
         <button
-          className="w-full max-w-md bg-orange-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-orange-600 transition"
+          className="w-full max-w-md bg-orange text-white py-3 px-6 rounded-lg text-lg font-semibold"
           onClick={() => router.push('/login')}
         >
           바로 로그인하기

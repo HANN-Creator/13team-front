@@ -23,6 +23,7 @@ export default {
           500: "#505050", //label, additional text
           600: "#111111" //default
         },
+        'blue': "#6EB5CB",
       },
     },
   },

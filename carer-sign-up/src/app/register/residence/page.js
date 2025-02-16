@@ -66,13 +66,13 @@ export default function ResidencePage() {
 
       {/* 검색 입력창 */}
       <div className="mt-8 relative">
-        <FiSearch className="absolute left-4 top-3 text-gray-400 text-xl" />
+        <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
         <input
           type="text"
           placeholder="도로명주소 또는 우편번호를 입력해 주세요."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full p-3 pl-12 border border-gray-200 placeholder-gray-400 rounded-full focus:outline-none focus:ring-2 focus:ring-orange"
+          className="w-full p-3 pl-10 border border-gray-200 placeholder-gray-400 placeholder:text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-orange"
         />
       </div>
 

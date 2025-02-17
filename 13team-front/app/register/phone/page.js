@@ -89,12 +89,13 @@ export default function PhonePage() {
 
       {/* 확인 버튼 */}
       <button
-        className="w-full mt-6 bg-orange-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-orange-600 transition"
-        disabled={phone.length < 13}
-        onClick={handleNext}
-      >
-        확인
-      </button>
+  className="w-full mt-6 bg-primary text-white py-3 rounded-lg text-lg font-semibold hover:bg-opacity-80 transition"
+  disabled={phone.length < 13}
+  onClick={handleNext}
+>
+  확인
+</button>
+
     </div>
   );
 }

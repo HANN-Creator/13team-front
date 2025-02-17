@@ -4,20 +4,17 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export default function AccountPage() {
-  const router = useRouter(); // 사용하지 않아서 ESLint 경고 발생
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [position, setPosition] = useState('');
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
+  const [loading, setLoading] = useState(false); // API 요청 중 로딩 상태 관리
+  const [error, setError] = useState(null); // 오류 메시지 저장
 
-  useEffect(() => {
-    console.log(router, name, phone, position);
-  }, [router, name, phone, position]);
-  
-
-  // URL에서 이전 입력 데이터 가져오기
+  // URL에서 데이터 가져오기
   useEffect(() => {
     const nameFromParams = searchParams.get('name');
     const phoneFromParams = searchParams.get('phone');
@@ -28,10 +25,41 @@ export default function AccountPage() {
     if (positionFromParams) setPosition(decodeURIComponent(positionFromParams));
   }, [searchParams]);
 
-  // 회원가입 완료 후 이동
-  const handleRegister = () => {
-    if (id.trim() && password.trim()) {
-      router.push(`/register/success?name=${encodeURIComponent(name)}`); // router 사용
+  // 회원가입 API 호출 함수
+  const handleRegister = async () => {
+    if (!id || !password) {
+      setError("아이디와 비밀번호를 입력해주세요.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('https://0a69-121-134-41-93.ngrok-free.app/auth/carer/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          position,
+          id,
+          password
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("회원가입 실패! 다시 시도해주세요.");
+      }
+
+      // 성공적으로 회원가입이 완료되면 success 페이지로 이동
+      router.push(`/register/success?name=${encodeURIComponent(name)}`);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,18 +76,17 @@ export default function AccountPage() {
 
       {/* 진행 상태 바 */}
       <div className="mt-3 w-full flex">
-        <div className="h-1 w-1/3 bg-gray-300 rounded"></div>
-        <div className="h-1 w-1/3 bg-gray-300 rounded"></div>
+      <div className="h-1 w-1/3 bg-gray-300 rounded"></div>
+      <div className="h-1 w-1/3 bg-gray-300 rounded"></div>
         <div className="h-1 w-1/3 bg-orange-500 rounded"></div>
       </div>
 
-      {/* 회원가입 안내 */}
+      {/* 타이틀 */}
       <p className="text-sm text-gray-600 mt-6">마지막 단계예요!</p>
       <h2 className="text-2xl font-bold text-gray-900 mt-2">
         로그인 시 사용하실 아이디와 <br /> 비밀번호를 입력해주세요!
       </h2>
 
- 
       {/* 아이디 입력 필드 */}
       <div className="mt-6">
         <label className="block text-sm font-medium text-gray-700">아이디</label>
@@ -84,14 +111,18 @@ export default function AccountPage() {
         />
       </div>
 
+      {/* 에러 메시지 */}
+      {error && <p className="text-red-500 mt-2">{error}</p>}
+
       {/* 확인 버튼 */}
       <button
-        className="w-full mt-6 bg-orange-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-orange-600 transition"
-        disabled={!id || !password}
-        onClick={handleRegister}
-      >
-        확인
-      </button>
+  className="w-full mt-6 bg-primary text-white py-3 rounded-lg text-lg font-semibold hover:bg-opacity-80 transition"
+  disabled={!id || !password || loading}
+  onClick={handleRegister}
+>
+  {loading ? "가입 중..." : "확인"}
+</button>
+
     </div>
   );
 }

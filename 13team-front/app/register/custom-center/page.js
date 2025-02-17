@@ -14,17 +14,33 @@ export default function CustomCenterRegisterPage() {
     address: '',
   });
   const [step, setStep] = useState(1);
+  const [searchResults, setSearchResults] = useState([]); // 주소 검색 결과
+  const [loading, setLoading] = useState(false); // 로딩 상태
 
   // 입력값 변경 핸들러
   const handleChange = (e) => {
     setCenterData({ ...centerData, [e.target.name]: e.target.value });
   };
 
-  // 다음 필드 표시
-  const handleNext = () => {
-    setStep(step + 1);
+  // 주소 검색 API 호출 용 함수  카카오로 테스트 해볼라함.
+  const handleAddressSearch = async (query) => {
+    if (!query) {
+      setSearchResults([]);
+      return;
+    }
+  
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/kakao-search?query=${query}`);
+      const data = await response.json();
+      setSearchResults(data.documents || []);
+    } catch (error) {
+      console.error("주소 검색 오류:", error);
+      setSearchResults([]);
+    }
+    setLoading(false);
   };
-
+  
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-4">
       {/* 상단 네비게이션 */}
@@ -43,7 +59,7 @@ export default function CustomCenterRegisterPage() {
       <h2 className="mt-6 text-2xl font-bold text-gray-900">센터의 정보를 받아볼게요.</h2>
       <p className="text-gray-600 mt-2">근처의 요양보호사 분들을 추천해드릴게요.</p>
 
-      {/* 입력 필드 (위에서 아래로 추가) */}
+      {/* 입력 필드 */}
       <div className="mt-6 space-y-4">
         {step >= 3 && (
           <div className="opacity-100">
@@ -55,10 +71,30 @@ export default function CustomCenterRegisterPage() {
                 name="address"
                 placeholder="지역을 선택해주세요."
                 value={centerData.address}
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleAddressSearch(e.target.value);
+                }}
                 className="w-full p-3 pl-12 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
+
+            {/* 검색 결과 표시 */}
+            {loading && <p className="text-sm text-gray-500 mt-2">검색 중...</p>}
+            {searchResults.length > 0 && (
+              <div className="mt-2 bg-white rounded-lg shadow-md max-h-60 overflow-y-auto">
+                {searchResults.map((result) => (
+                  <div
+                    key={result.id}
+                    className="p-3 border-b border-gray-200 cursor-pointer hover:bg-gray-100 transition"
+                    onClick={() => setCenterData({ ...centerData, address: result.place_name })}
+                  >
+                    <p className="text-sm font-semibold">{result.place_name}</p>
+                    <p className="text-xs text-gray-500">{result.road_address_name || result.address_name}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -90,11 +126,11 @@ export default function CustomCenterRegisterPage() {
         </div>
       </div>
 
-      {/* 확인 버튼 (다음 필드 활성화) */}
+      {/* 확인 버튼 */}
       {step < 3 ? (
         <button
           className="w-full mt-6 bg-primary text-white py-3 rounded-lg text-lg font-semibold hover:bg-opacity-80 transition"
-          onClick={handleNext}
+          onClick={() => setStep(step + 1)}
           disabled={(step === 1 && !centerData.name) || (step === 2 && !centerData.phone)}
         >
           확인
@@ -102,7 +138,7 @@ export default function CustomCenterRegisterPage() {
       ) : (
         <button
           className="w-full mt-6 bg-primary text-white py-3 rounded-lg text-lg font-semibold hover:bg-opacity-80 transition"
-          onClick={() => router.push('/register/additional-info')}
+          onClick={() => router.push('/register/name')}
         >
           확인
         </button>

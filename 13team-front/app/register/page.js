@@ -7,29 +7,31 @@ import { FiSearch } from 'react-icons/fi';
 export default function RegisterPage() {
   const router = useRouter();
   const [search, setSearch] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const [selectedCenter, setSelectedCenter] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // 센터 리스트 (예제 데이터, 실제 API 연동 시 변경 필요)
-  const centerList = [
-    { id: 1, name: '강동구 재가노인복지센터', location: '서울시 강동구 천호동', manager: '김수호', workers: 13 },
-    { id: 2, name: '강동구 재가노인복지센터', location: '서울시 강동구 천호동', manager: '김수민', workers: 15 },
-  ];
+  // 카카오 API를 이용한 센터 검색
+  const handleSearch = async (query) => {
+    if (!query) {
+      setSearchResults([]);
+      return;
+    }
 
-  // 검색어에 따라 센터 필터링
-  const filteredCenters = search
-    ? centerList.filter((center) => center.name.includes(search))
-    : [];
+    try {
+      const response = await fetch(`/api/kakao-search?query=${query}`);
+      const data = await response.json();
+      setSearchResults(data.documents || []);
+    } catch (error) {
+      console.error('검색 오류:', error);
+      setSearchResults([]);
+    }
+  };
 
   // 센터 선택 시 모달 표시
   const handleSelectCenter = (center) => {
     setSelectedCenter(center);
     setShowModal(true);
-  };
-
-  // 검색 결과 없을 때 직접 센터 등록 페이지로 이동
-  const handleRegisterCenter = () => {
-    router.push('/register/custom-center');
   };
 
   return (
@@ -59,22 +61,25 @@ export default function RegisterPage() {
           type="text"
           placeholder="건물명 또는 주소를 입력해주세요."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            handleSearch(e.target.value);
+          }}
           className="w-full p-3 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
         />
       </div>
 
       {/* 검색 결과 */}
-      {filteredCenters.length > 0 ? (
+      {searchResults.length > 0 ? (
         <div className="mt-4 bg-white rounded-lg shadow-md max-h-64 overflow-y-auto">
-          {filteredCenters.map((center) => (
+          {searchResults.map((center) => (
             <div
               key={center.id}
               className="p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-100 transition"
               onClick={() => handleSelectCenter(center)}
             >
-              <p className="text-lg font-bold">{center.name}</p>
-              <p className="text-sm text-gray-600">{center.location}</p>
+              <p className="text-lg font-bold">{center.place_name}</p>
+              <p className="text-sm text-gray-600">{center.address_name}</p>
             </div>
           ))}
         </div>
@@ -86,8 +91,8 @@ export default function RegisterPage() {
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-600">센터가 검색이 안되시나요?</p>
         <button
-          className="w-full bg-primary text-white py-3 rounded-lg text-lg font-semibold hover:bg-opacity-80 transition mt-2"
-          onClick={handleRegisterCenter}
+          className="w-full bg-orange-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-opacity-80 transition mt-2"
+          onClick={() => router.push('/register/custom-center')}
         >
           직접 센터 등록하기
         </button>
@@ -99,8 +104,8 @@ export default function RegisterPage() {
           <div className="bg-white p-6 rounded-t-2xl shadow-lg w-full max-w-md">
             <p className="text-lg font-semibold mb-4">아래의 지역에 거주하시는 게 맞나요?</p>
             <div className="p-4 border rounded-md">
-              <p className="text-lg font-bold">{selectedCenter.name}</p>
-              <p className="text-sm text-gray-600">{selectedCenter.location}</p>
+              <p className="text-lg font-bold">{selectedCenter.place_name}</p>
+              <p className="text-sm text-gray-600">{selectedCenter.address_name}</p>
             </div>
             <div className="flex justify-between mt-4">
               <button

@@ -10,13 +10,13 @@ export default function RegisterPage() {
   const [selectedCenter, setSelectedCenter] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // 센터 리스트 (예제 데이터)
+  // 센터 리스트 (예제 데이터, 실제 API 연동 시 변경 필요)
   const centerList = [
     { id: 1, name: '강동구 재가노인복지센터', location: '서울시 강동구 천호동', manager: '김수호', workers: 13 },
     { id: 2, name: '강동구 재가노인복지센터', location: '서울시 강동구 천호동', manager: '김수민', workers: 15 },
   ];
 
-  // 검색어에 따라 필터링
+  // 검색어에 따라 센터 필터링
   const filteredCenters = search
     ? centerList.filter((center) => center.name.includes(search))
     : [];
@@ -25,6 +25,11 @@ export default function RegisterPage() {
   const handleSelectCenter = (center) => {
     setSelectedCenter(center);
     setShowModal(true);
+  };
+
+  // 검색 결과 없을 때 직접 센터 등록 페이지로 이동
+  const handleRegisterCenter = () => {
+    router.push('/register/custom-center');
   };
 
   return (
@@ -60,7 +65,7 @@ export default function RegisterPage() {
       </div>
 
       {/* 검색 결과 */}
-      {filteredCenters.length > 0 && (
+      {filteredCenters.length > 0 ? (
         <div className="mt-4 bg-white rounded-lg shadow-md max-h-64 overflow-y-auto">
           {filteredCenters.map((center) => (
             <div
@@ -73,7 +78,20 @@ export default function RegisterPage() {
             </div>
           ))}
         </div>
+      ) : (
+        <p className="text-gray-500 text-sm mt-4">검색 결과가 없습니다.</p>
       )}
+
+      {/* 직접 센터 등록 버튼 */}
+      <div className="mt-6 text-center">
+        <p className="text-sm text-gray-600">센터가 검색이 안되시나요?</p>
+        <button
+          className="w-full bg-primary text-white py-3 rounded-lg text-lg font-semibold hover:bg-opacity-80 transition mt-2"
+          onClick={handleRegisterCenter}
+        >
+          직접 센터 등록하기
+        </button>
+      </div>
 
       {/* 모달 창 */}
       {showModal && selectedCenter && (

@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Pretendard', Arial, Helvetica, sans-serif;
+}
+
+/* placeholder 스타일 */
+::placeholder {
+  color: #767676;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* input 값 스타일 */
+input {
+  color: #111111;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.bg-gradient-to-t {
+  background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}

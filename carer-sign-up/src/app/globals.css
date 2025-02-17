@@ -20,3 +20,21 @@ body {
   background: var(--background);
   font-family: 'Pretendard', Arial, Helvetica, sans-serif;
 }
+
+/* placeholder 스타일 */
+::placeholder {
+  color: #767676;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* input 값 스타일 */
+input {
+  color: #111111;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.bg-gradient-to-t {
+  background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}

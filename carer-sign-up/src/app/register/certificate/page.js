@@ -62,44 +62,46 @@ export default function CertificationPage() {
     <div className="min-h-screen bg-gray-50 px-6 py-4">
       {/* 상단 네비게이션 */}
       <div className="relative flex items-center justify-center">
-        <button onClick={() => router.back()} className="absolute left-0 text-gray-600 text-lg">
-          ←
+        <button onClick={() => router.back()} className="absolute left-0 text-gray-500 text-lg">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 24L12 16L20 8" stroke="#111111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </button>
-        <p className="text-lg font-bold text-gray-600">회원가입</p>
+        <p className="text-lg font-semibold text-gray-600">회원가입</p>
       </div>
 
       {/* 진행 상태 바 */}
       <div className="mt-3 w-full flex">
-        <div className="h-1 w-1/3 bg-gray-300 rounded"></div>
-        <div className="h-1 w-1/3 bg-gray-300 rounded mx-1"></div>
-        <div className="h-1 w-1/3 bg-orange rounded"></div>
+        <div className="h-[6px] w-1/3 bg-gray-300 rounded-[30px]"></div>
+        <div className="h-[6px] w-1/3 bg-gray-300 rounded-[30px] mx-2"></div>
+        <div className="h-[6px] w-1/3 bg-orange rounded-[30px]"></div>
       </div>
 
       {/* 타이틀 */}
-      <p className="text-gray-500 mt-6">마지막 단계예요!</p>
-      <h2 className="mt-3 text-2xl font-bold text-gray-600">소유하고 계신 자격증을 입력해 주세요.</h2>
+      <p className="text-base font-medium text-gray-500 mt-6">마지막 단계예요!</p>
+      <h2 className="mt-3 text-[26px] font-bold text-gray-600">소유하고 계신 자격증을 <div>입력해 주세요.</div></h2>
 
       <form onSubmit={handleNext}>
         {/* 요양 보호사 자격증 번호 입력 필드 */}
         <div className="mt-8">
-          <label className="block font-medium text-gray-500">요양 보호사 자격증 번호(필수)</label>
+          <label className="block text-base font-normal text-gray-600">요양 보호사 자격증 번호(필수)</label>
           <input
             type="text"
             placeholder="20xx-xxxxxxx 형식으로 입력해 주세요."
             value={certNumber}
             onChange={handleCertNumberChange}
-            className="w-full p-3 border border-gray-200 placeholder-gray-400 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
+            className="w-full p-3 border border-gray-200 rounded-[9px] mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
             maxLength={12}
           />
 
           {/* 자격증 사진 업로드 */}
-          <p className="mt-6 font-medium text-gray-500">인증을 위해 자격증 사진을 업로드해 주세요.</p>
-          <label className="mt-2 flex flex-col items-center justify-center w-full h-40 border-gray-70 rounded-lg cursor-pointer bg-gray-70">
+          <p className="mt-6 text-base font-normal text-gray-600">인증을 위해 자격증 사진을 업로드해 주세요.</p>
+          <label className="mt-2 flex flex-col items-center justify-center w-full h-40 border-gray-70 rounded-[9px] cursor-pointer bg-gray-70">
             {uploadedImage ? (
               <img src={uploadedImage} alt="자격증 미리보기" className="h-full object-cover" />
             ) : (
               <div className="flex flex-col items-center">
-                <span className="mt-2 text-orange font-semibold">사진 업로드하기 +</span>
+                <span className="mt-2 text-orange text-base font-semibold">사진 업로드하기 +</span>
               </div>
             )}
             <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
@@ -108,7 +110,7 @@ export default function CertificationPage() {
           {/* 간호조무사 자격증 보유 선택 */}
           <div className="mt-6">
             <div className="flex items-center justify-between">
-              <p className="font-medium text-gray-500">간호조무사 자격증 보유</p>
+              <p className="font-normal text-base text-gray-600">간호조무사 자격증 보유</p>
               <button
                 type='button'
                 className={'ml-auto w-8 h-8'}
@@ -119,12 +121,12 @@ export default function CertificationPage() {
             </div>
 
             {hasNurseCert && (
-              <div className="flex gap-3 mt-2">
+              <div className="flex gap-3 mt-2 text-base font-semibold">
               {['1급', '2급'].map((level) => (
                 <button
                   type='button'
                   key={level}
-                  className={`px-20 py-2 rounded-full border ${
+                  className={`w-1/2 py-2 rounded-[61px] border ${
                     selectedNurseLevel === level ? 'bg-orange text-white' : 'bg-white text-gray-600'
                   }`}
                   onClick={(event) => {
@@ -141,7 +143,7 @@ export default function CertificationPage() {
           
           {/* 사회복지사 자격증 보유 선택 */}
           <div className="mt-6 flex items-center justify-between">
-            <p className="font-medium text-gray-500">사회복지사 자격증 보유</p>
+            <p className="font-normal text-base text-gray-600">사회복지사 자격증 보유</p>
             <button
               type='button'
               className={'w-8 h-8'}
@@ -155,10 +157,10 @@ export default function CertificationPage() {
           </div>
         </div>
 
-        {/* 확인 버튼 */}
+        {/* 회원가입 완료하기 버튼 */}
         <input
           type="submit"
-          className="w-full mt-6 bg-orange text-white py-3 rounded-lg text-lg font-semibold"
+          className="w-full mt-6 bg-orange text-white py-3 rounded-[9px] text-base font-semibold"
           value="회원가입 완료하기"
           style={{ cursor: 'pointer' }}
         />

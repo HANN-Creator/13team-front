@@ -34,10 +34,9 @@ export default function SuccessPage() {
       <h2 className="text-3xl font-bold text-gray-600">축하드려요,</h2>
       <h2 className="text-3xl font-bold text-gray-600 mt-2">가입이 완료되었습니다!</h2>
 
-
       {/* 돌아보기 버튼 */}
       <button
-        className="w-full max-w-md mt-6 bg-orange text-white py-3 rounded-lg text-lg font-semibold"
+        className="w-full max-w-md mt-6 bg-orange text-white py-3 rounded-[9px] text-normal font-semibold"
         onClick={() => router.push('/login')} // 로그인 페이지 또는 메인 페이지로 이동
       >
         둘러보기

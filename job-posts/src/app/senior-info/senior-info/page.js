@@ -7,7 +7,9 @@ import Modal from '../Modal';
 export default function SeniorInformationPage() {
   const router = useRouter();
   const [name, setName] = useState('');
-  const [birth, setBirth] = useState('');
+  const [year, setYear] = useState('');
+  const [month, setMonth] = useState('');
+  const [day, setDay] = useState('');
   const [gender, setGender] = useState('');
   const [grade, setGrade] = useState('');
   const [weight, setWeight] = useState('');
@@ -30,8 +32,8 @@ export default function SeniorInformationPage() {
       alert('어르신의 성함을 입력해 주세요.');
       return;
     }
-    if (!birth) {
-      alert('어르신의 출생연도를 선택해 주세요.');
+    if (!year || !month || !day) {
+      alert('어르신의 생년월일을 입력해 주세요.');
       return;
     }
     if (!gender) {
@@ -121,23 +123,42 @@ export default function SeniorInformationPage() {
         <div className="mt-12">
           <div>
             <p className="text-lg font-bold text-gray-600">
-              어르신의 출생연도는 어떻게 되세요?&nbsp;
+              어르신의 생년월일은 어떻게 되세요?&nbsp;
               <span className="text-red">
                 *
               </span>
             </p>
           </div>
-          <select
-            name="birth"
-            value={birth}
-            onChange={(e) => setBirth(e.target.value)}
-            className="w-full p-3 font-normal text-[15px] text-gray-500 border border-gray-200 rounded-[9px] mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
-          >
-            <option value="" disabled className="font-normal text-[15px] text-gray-400">출생연도를 선택해 주세요.</option>
-            {birthYears.map((year) => (
-              <option key={year} value={year} className="font-semibold text-base text-gray-600">{year}</option>
-            ))}
-          </select>
+          <div className="flex justify-between gap-2">
+            <input
+              type="text"
+              name="year"
+              maxlength = "4"
+              minlength = "4"
+              placeholder="연도"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+              className="w-[40%] p-3 border border-gray-200 rounded-[9px] mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
+            />
+            <input
+              type="text"
+              name="month"
+              maxlength = "2"
+              placeholder="월"
+              value={month}
+              onChange={(e) => setMonth(e.target.value)}
+              className="w-[30%] p-3 border border-gray-200 rounded-[9px] mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
+            />
+            <input
+              type="text"
+              name="day"
+              maxlength = "2"
+              placeholder="일"
+              value={day}
+              onChange={(e) => setDay(e.target.value)}
+              className="w-[30%] p-3 border border-gray-200 rounded-[9px] mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
+            />
+          </div>
         </div>
 
         {/* 성별 선택 */}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Modal from '../Modal';
 
 export default function SeniorInformationPage() {
   const router = useRouter();
@@ -13,6 +14,7 @@ export default function SeniorInformationPage() {
   const [diseaseInfo, setDiseaseInfo] = useState('');
   const [dementiaInfo, setDementiaInfo] = useState([]);
   const [cohabitant, setCohabitant] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const grades = ['등급없음', '1등급', '2등급', '3등급', '4등급', '5등급', '인적지원 등급'];
   const dementiaInfoList = ['정상(증상없음)', '집 밖을 배회', '했던 말을 반복하는 등의 단기기억 장애', '가족을 알아보지 못함', '길을 잃거나 자주 가던 곳을 헤맴', '어린아이 같은 행동', '사람을 의심하는 증상', '때리거나 욕설 등의 공격적인 행동'];
@@ -65,9 +67,16 @@ export default function SeniorInformationPage() {
           </svg>
         </button>
         <p className="text-lg font-semibold text-gray-600">어르신 정보 등록</p>
-        <button onClick={() => router.push('/home')} className="absolute right-0 font-semibold text-gray-400 text-base">
+        <button onClick={() => setShowModal(true)} className="absolute right-0 font-semibold text-gray-400 text-base">
           임시저장
         </button>
+        <Modal 
+            showModal={showModal} 
+            onClose={() => {setShowModal(false);}} 
+            onConfirm={() => {
+                setShowModal(false);
+                router.push('/'); // 홈으로 이동
+        }}/>
       </div>
 
       {/* 진행 상태 바 */}

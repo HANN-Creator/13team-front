@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Modal from '../Modal';
 
 export default function JobPostingPage() {
   const router = useRouter();
@@ -10,6 +11,7 @@ export default function JobPostingPage() {
   const [movingAssistance, setMovingAssistance] = useState([]);
   const [lifeAssistance, setLifeAssistance] = useState([]);
   const [detailService, setDetailService] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const mealAssistanceList = ['스스로 식사 가능', '식사 차려드리기', '죽, 반찬 등 조리 필요', '경관식 보조'];
   const toiletAssistanceList = ['스스로 배변 가능', '가끔 대소변 실수 시 도움', '기저귀 케어 필요', '유치도뇨/방광루/장루 관리'];
@@ -48,9 +50,16 @@ export default function JobPostingPage() {
           </svg>
         </button>
         <p className="text-lg font-semibold text-gray-600">어르신 정보 등록</p>
-        <button onClick={() => router.push('/register/certificate')} className="absolute right-0 font-semibold text-gray-400 text-base">
+        <button onClick={() => setShowModal(true)} className="absolute right-0 font-semibold text-gray-400 text-base">
           임시저장
         </button>
+        <Modal 
+            showModal={showModal} 
+            onClose={() => {setShowModal(false);}} 
+            onConfirm={() => {
+                setShowModal(false);
+                router.push('/'); // 홈으로 이동
+        }}/>
       </div>
 
       {/* 진행 상태 바 */}

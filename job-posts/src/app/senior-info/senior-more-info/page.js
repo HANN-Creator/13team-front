@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Modal from '../Modal';
 
 export default function SeniorMoreInformationPage() {
   const router = useRouter();
@@ -10,6 +11,7 @@ export default function SeniorMoreInformationPage() {
   const [careStartHour, setCareStartHour] = useState('10:00');
   const [careEndHour, setCareEndHour] = useState('18:00');
   const [additionalInfo, setAdditionalInfo] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const careDaysList = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'];
   const additionalInfoList = ['가사도우미 있음', '주차가능', '반려동물 있음', '집 평수 30평 이상'];
@@ -42,9 +44,16 @@ export default function SeniorMoreInformationPage() {
           </svg>
         </button>
         <p className="text-lg font-semibold text-gray-600">어르신 정보 등록</p>
-        <button onClick={() => router.push('/register/certificate')} className="absolute right-0 font-semibold text-gray-400 text-base">
+        <button onClick={() => setShowModal(true)} className="absolute right-0 font-semibold text-gray-400 text-base">
           임시저장
         </button>
+        <Modal 
+            showModal={showModal} 
+            onClose={() => {setShowModal(false);}} 
+            onConfirm={() => {
+                setShowModal(false);
+                router.push('/'); // 홈으로 이동
+        }}/>
       </div>
 
       {/* 진행 상태 바 */}

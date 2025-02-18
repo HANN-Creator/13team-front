@@ -8,12 +8,12 @@ export default function SelectSenior() {
   const [selectedSenior, setSelectedSenior] = useState(null);
 
   const seniors = [
-    { id: 1, name: '김수은 님', image: '/senior.png' },
-    { id: 2, name: '김수은 님', image: null },
-    { id: 3, name: '김수은 님', image: null },
-    { id: 4, name: '김수은 님', image: null },
-    { id: 5, name: '김수은 님', image: null },
-    { id: 6, name: '어르신 추가', image: null },
+    { seniorID: 1, name: '김수은 님', image: '/senior.png' },
+    { seniorID: 2, name: '김수은 님', image: null },
+    { seniorID: 3, name: '김수은 님', image: null },
+    { seniorID: 4, name: '김수은 님', image: null },
+    { seniorID: 5, name: '김수은 님', image: null },
+    { seniorID: 6, name: '어르신 추가', image: null },
   ];
 
   // 다음 단계 이동
@@ -54,16 +54,16 @@ export default function SelectSenior() {
       {/* 어르신 선택 */}
       <div className="grid grid-cols-3 gap-x-4 gap-y-10 mt-20">
         {seniors.map((senior) => (
-          <div key={senior.id} className="flex flex-col items-center gap-y-2">
+          <div key={senior.seniorID} className="flex flex-col items-center gap-y-2">
             <button
               className={`flex items-center justify-center rounded-full w-[100px] h-[100px] border ${
-                selectedSenior === senior.id ? 'border-orange border-2.5' : 'border-gray-300'
+                selectedSenior === senior.seniorID ? 'border-orange border-2.5' : 'border-gray-300'
               }`}
-              onClick={() => (senior.id === 6 ? handleAddSenior() : setSelectedSenior(senior.id))}
+              onClick={() => (senior.seniorID === 6 ? handleAddSenior() : setSelectedSenior(senior.seniorID))}
             >
               {senior.image ? (
                 <img src={senior.image} alt={senior.name} className="w-full h-full rounded-full object-cover" />
-              ) : senior.id === 6 ? (
+              ) : senior.seniorID === 6 ? (
                 <div className="w-full h-full flex items-center justify-center bg-gray-200 bg-opacity-30 rounded-full border-2 border-dashed border-gray-350">
                   <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M21 33.25V8.75M8.75 21H33.25" stroke="#767676" strokeWidth="2.5" strokeLinecap="round" />
@@ -73,7 +73,7 @@ export default function SelectSenior() {
                 <ProfileIcon width={100} height={100} />
               )}
             </button>
-            <p className={`text-${senior.id === 6 ? 'gray-500 font-medium' : 'gray-600 font-bold'} text-base`}>{senior.name}</p>
+            <p className={`text-${senior.seniorID === 6 ? 'gray-500 font-medium' : 'gray-600 font-bold'} text-base`}>{senior.name}</p>
           </div>
         ))}
       </div>

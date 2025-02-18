@@ -6,36 +6,36 @@ import GreenCheckIcon from '../GreenCheckIcon';
 
 export default function BasicInformationPage() {
   const router = useRouter();
-  const [selectedTask, setSelectedTask] = useState('방문요양'); // 기존 정보로 초기화
-  const [selectedDays, setSelectedDays] = useState(['월요일', '화요일']); // 기존 정보로 초기화
-  const [startTime, setStartTime] = useState('10:00');  // 기존 정보로 초기화
-  const [endTime, setEndTime] = useState('18:00');  // 기존 정보로 초기화
-  const [workHours, setWorkHours] = useState([startTime, endTime]);
-  const [salary, setSalary] = useState(''); // 기존 정보로 초기화
-  const [welfareBenefits, setWelfareBenefits] = useState([]);
-  const [notes, setNotes] = useState('');
-  const [negotiable, setNegotiable] = useState({
-    days: false,
-    hours: false,
-    salary: false,
+  const [selectedJobType, setSelectedJobType] = useState('방문요양'); // 기존 정보로 초기화
+  const [selectedWorkDays, setSelectedWorkDays] = useState(['월요일', '화요일']); // 기존 정보로 초기화
+  const [workStartHour, setStartTime] = useState('10:00');  // 기존 정보로 초기화
+  const [workEndHour, setEndTime] = useState('18:00');  // 기존 정보로 초기화
+  const [workHours, setWorkHours] = useState([workStartHour, workEndHour]);
+  const [wage, setWage] = useState(''); // 기존 정보로 초기화
+  const [welfare, setWelfare] = useState([]);
+  const [additionalInfo, setAdditionalInfo] = useState('');
+  const [negotiation, setNegotiation] = useState({
+    workDays: false,
+    workHours: false,
+    wage: false,
     minimumWage: false,
   });
-  const [salaryError, setSalaryError] = useState('');
+  const [wageError, setWageError] = useState('');
 
-  const tasks = ['방문요양', '입주요양', '방문목욕', '병원동행', '주야간보호', '병원', '요양원'];
-  const days = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'];
-  const welFareBenefitsList = ['4대보험', '퇴직급여', '식사(비) 지원', '장기근속 장려금', '교통비 지원', '중증가산수당', '운전수당', '정부 지원금', '경조사비', '명절선물'];
+  const jobTypes = ['방문요양', '입주요양', '방문목욕', '병원동행', '주야간보호', '병원', '요양원'];
+  const workDays = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'];
+  const welfareList = ['4대보험', '퇴직급여', '식사(비) 지원', '장기근속 장려금', '교통비 지원', '중증가산수당', '운전수당', '정부 지원금', '경조사비', '명절선물'];
 
   const MINIMUM_WAGE = 10020;
 
   // 다음 단계로 이동 (채용 공고 등록 페이지)
   const handleNext = (event) => {
     event.preventDefault(); // 기본 동작 방지
-    if (!selectedTask) {
+    if (!selectedJobType) {
       alert('근무 형태를 선택해 주세요.');
       return;
     }
-    if (!selectedDays.length) {
+    if (!selectedWorkDays.length) {
       alert('채용 요일을 선택해 주세요.');
       return;
     }
@@ -43,26 +43,26 @@ export default function BasicInformationPage() {
       alert('채용 시간을 선택해 주세요.');
       return;
     }
-    if (!salary) {
+    if (!wage) {
       alert('급여를 입력해 주세요.');
       return;
     }
-    if (parseInt(salary) < MINIMUM_WAGE) {
-      setSalaryError(`2025년의 최저시급인 ${MINIMUM_WAGE.toLocaleString()}원 이상의 금액을 입력해 주세요!`);
+    if (parseInt(wage) < MINIMUM_WAGE) {
+      setWageError(`2025년의 최저시급인 ${MINIMUM_WAGE.toLocaleString()}원 이상의 금액을 입력해 주세요!`);
       return;
     }
-    if (!welfareBenefits.length) {
+    if (!welfare.length) {
       alert('제공하실 복리후생을 선택해 주세요.');
       return;
     }
     else router.push('/job-post/job-posting');
   };
 
-  const calculateMonthlySalary = (hourlyWage) => {
-    const hoursPerDay = (parseInt(endTime) - parseInt(startTime)) || 0; // 하루 근무 시간
-    const daysPerWeek = selectedDays.length; // 주당 근무 일수
-    const weeksPerMonth = 4.33; // 월당 평균 주 수
-    return hourlyWage * hoursPerDay * daysPerWeek * weeksPerMonth;
+  const calculateMonthlyWage = (hourlyWage) => {
+    const workHoursPerDay = (parseInt(workEndHour) - parseInt(workStartHour)) || 0; // 하루 근무 시간
+    const workDaysPerWeek = selectedWorkDays.length; // 주당 근무 일수
+    const weeksPerMonth = 4; // 월당 주 수 (4주)
+    return hourlyWage * workHoursPerDay * workDaysPerWeek * weeksPerMonth;
   };
 
   return (
@@ -106,16 +106,16 @@ export default function BasicInformationPage() {
             </p>
           </div>
           <div className="mt-2 flex flex-wrap gap-3 text-base font-semibold">
-            {tasks.map((task, index) => (
+            {jobTypes.map((jobType, index) => (
               <button
                 type='button'
-                key={task}
+                key={jobType}
                 className={`w-[calc(50%-0.75rem)] py-4 rounded-[61px] border ${
-                  selectedTask === task ? 'bg-orange bg-opacity-10 border-orange text-orange' : 'bg-white text-gray-600'
+                  selectedJobType === jobType ? 'bg-orange bg-opacity-10 border-orange text-orange' : 'bg-white text-gray-600'
                 }`}
-                onClick={() => setSelectedTask(task)}
+                onClick={() => setSelectedJobType(jobType)}
               >
-                {task}
+                {jobType}
               </button>
             ))}
           </div>
@@ -134,15 +134,15 @@ export default function BasicInformationPage() {
             <p className="font-normal text-sm text-gray-400 mt-1">중복 선택 가능</p>
           </div>
           <div className="mt-2 flex flex-wrap gap-3 text-base font-semibold">
-            {days.map((day, index) => (
+            {workDays.map((day, index) => (
               <button
                 type='button'
                 key={day}
                 className={`w-[calc(50%-0.75rem)] py-4 rounded-[61px] border ${
-                  selectedDays.includes(day) ? 'bg-orange bg-opacity-10 border-orange text-orange' : 'bg-white text-gray-600'
+                  selectedWorkDays.includes(day) ? 'bg-orange bg-opacity-10 border-orange text-orange' : 'bg-white text-gray-600'
                 }`}
                 onClick={() => {
-                  setSelectedDays((prev) =>
+                  setSelectedWorkDays((prev) =>
                     prev.includes(day) ? prev.filter((req) => req !== day) : [...prev, day]
                   );
                 }}
@@ -153,12 +153,12 @@ export default function BasicInformationPage() {
           </div>
           <div className="mt-3 flex items-center">
             <label className="flex items-center cursor-pointer">
-              <GreenCheckIcon selected={negotiable.days} />
+              <GreenCheckIcon selected={negotiation.workDays} />
               <p className="ml-2 font-normal text-[15px] text-gray-400">협의 가능</p>
               <input
                 type="checkbox"
-                checked={negotiable.days}
-                onChange={() => setNegotiable({ ...negotiable, days: !negotiable.days })}
+                checked={negotiation.workDays}
+                onChange={() => setNegotiation({ ...negotiation, workDays: !negotiation.workDays })}
                 className="hidden"
               />
             </label>
@@ -180,7 +180,7 @@ export default function BasicInformationPage() {
             <div className="w-1/2">
               <label className="block text-base font-medium text-gray-500">시작</label>
               <select
-                value={startTime}
+                value={workStartHour}
                 onChange={(e) => setStartTime(e.target.value)}
                 className="w-full mt-2 p-3 text-base font-semibold text-gray-600 border border-gray-200 rounded-[9px] focus:outline-none focus:ring-2 focus:ring-orange"
               >
@@ -196,7 +196,7 @@ export default function BasicInformationPage() {
             <div className="w-1/2">
               <label className="block text-base font-medium text-gray-500">종료</label>
               <select
-                value={endTime}
+                value={workEndHour}
                 onChange={(e) => setEndTime(e.target.value)}
                 className="w-full mt-2 p-3 text-base font-semibold text-gray-600 border border-gray-200 rounded-[9px] focus:outline-none focus:ring-2 focus:ring-orange"
               >
@@ -211,12 +211,12 @@ export default function BasicInformationPage() {
           </div>
           <div className="mt-3 flex items-center">
             <label className="flex items-center cursor-pointer">
-              <GreenCheckIcon selected={negotiable.hours} />
+              <GreenCheckIcon selected={negotiation.workHours} />
               <p className="ml-2 font-normal text-[15px] text-gray-400">협의 가능</p>
               <input
                 type="checkbox"
-                checked={negotiable.hours}
-                onChange={() => setNegotiable({ ...negotiable, hours: !negotiable.hours })}
+                checked={negotiation.workHours}
+                onChange={() => setNegotiation({ ...negotiation, workHours: !negotiation.workHours })}
                 className="hidden"
               />
             </label>
@@ -233,42 +233,42 @@ export default function BasicInformationPage() {
           <input
             type="text"
             placeholder="최저시급 이상의 금액을 입력해 주세요."
-            value={salary}
+            value={wage}
             onChange={(e) => {
-              setSalary(e.target.value);
+              setWage(e.target.value);
               if (parseInt(e.target.value) >= MINIMUM_WAGE) {
-                setSalaryError('');
+                setWageError('');
               } else {
-                setSalaryError(`2025년의 최저시급인 ${MINIMUM_WAGE.toLocaleString()}원 이상의 금액을 입력해 주세요!`);
+                setWageError(`2025년의 최저시급인 ${MINIMUM_WAGE.toLocaleString()}원 이상의 금액을 입력해 주세요!`);
               }
             }}
             className="w-full p-3 border border-gray-200 rounded-[9px] mt-4 focus:outline-none focus:ring-2 focus:ring-orange"
           />
-          {salaryError && <p className="text-red text-sm font-normal mt-2">{salaryError}</p>}
+          {wageError && <p className="text-red text-sm font-normal mt-2">{wageError}</p>}
           <div className="mt-3 flex items-center">
             <p className="font-normal text-[15px] text-gray-400">월급 계산기:</p>
             <span className="font-bold text-base text-gray-600 ml-2">
-              {!salaryError && salary ? `${calculateMonthlySalary(parseInt(salary) || 0).toLocaleString()}원` : ''}
+              {!wageError && wage ? `${calculateMonthlyWage(parseInt(wage) || 0).toLocaleString()}원` : ''}
             </span>
           </div>
           <div className="mt-3 flex flex-col items-start gap-2">
             <label className="flex items-center cursor-pointer">
-              <GreenCheckIcon selected={negotiable.salary} />
+              <GreenCheckIcon selected={negotiation.wage} />
               <p className="ml-2 font-normal text-[15px] text-gray-400">협의 가능</p>
               <input
                 type="checkbox"
-                checked={negotiable.salary}
-                onChange={() => setNegotiable({ ...negotiable, salary: !negotiable.salary })}
+                checked={negotiation.wage}
+                onChange={() => setNegotiation({ ...negotiation, wage: !negotiation.wage })}
                 className="hidden"
               />
             </label>
             <label className="flex items-center cursor-pointer">
-              <GreenCheckIcon selected={negotiable.minimumWage} />
+              <GreenCheckIcon selected={negotiation.minimumWage} />
               <p className="ml-2 font-normal text-[15px] text-gray-400">당사는 본 채용에 관해 최저임금법을 준수합니다.</p>
               <input
                 type="checkbox"
-                checked={negotiable.minimumWage}
-                onChange={() => setNegotiable({ ...negotiable, minimumWage: !negotiable.minimumWage })}
+                checked={negotiation.minimumWage}
+                onChange={() => setNegotiation({ ...negotiation, minimumWage: !negotiation.minimumWage })}
                 className="hidden"
               />
             </label>
@@ -287,15 +287,15 @@ export default function BasicInformationPage() {
             <p className="font-normal text-[15px] text-gray-400 mt-1">중복 선택 가능</p>
           </div>
           <div className="mt-3 flex flex-wrap gap-3 text-base font-semibold">
-            {welFareBenefitsList.map((benefits, index) => (
+            {welfareList.map((benefits, index) => (
               <button
                 type='button'
                 key={benefits}
                 className={`w-[calc(50%-0.75rem)] py-4 rounded-[61px] border ${
-                  welfareBenefits.includes(benefits) ? 'bg-orange bg-opacity-10 border-orange boreder-1.5 text-orange' : 'bg-white text-gray-600'
+                  welfare.includes(benefits) ? 'bg-orange bg-opacity-10 border-orange boreder-1.5 text-orange' : 'bg-white text-gray-600'
                 }`}
                 onClick={() => {
-                  setWelfareBenefits((prev) =>
+                  setWelfare((prev) =>
                     prev.includes(benefits) ? prev.filter((req) => req !== benefits) : [...prev, benefits]
                   );
                 }}
@@ -311,8 +311,8 @@ export default function BasicInformationPage() {
           <p className="text-lg font-bold text-gray-600">요양보호사분께 남길 추가 사항을 적어주세요.</p>
           <textarea
             placeholder="근로 내용, 추가 근무 수당, 오시는 길 등 추가로 전달하실 내용을 입력해 주세요."
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
+            value={additionalInfo}
+            onChange={(e) => setAdditionalInfo(e.target.value)}
             className="w-full p-3 border border-gray-200 placeholder:font-[15px] rounded-[9px] mt-3 focus:outline-none focus:ring-2 focus:ring-orange"
             style={{ height: '124px' }}
           />

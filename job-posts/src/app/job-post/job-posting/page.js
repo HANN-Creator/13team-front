@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 export default function JobPostingPage() {
   const router = useRouter();
   const [title, setTitle] = useState('');
-  const [jobRequirements, setJobRequirements] = useState([]);
+  const [applyCondition, setApplyCondition] = useState([]);
   const [email, setEmail] = useState('');
 
   // 다음 단계로 이동 (등록 성공 페이지)
@@ -71,10 +71,10 @@ export default function JobPostingPage() {
                 type='button'
                 key={level}
                 className={`w-[calc(50%-0.75rem)] py-3 rounded-[61px] border ${
-                  jobRequirements.includes(level) ? 'bg-orange text-white' : 'bg-white text-gray-600'
+                  applyCondition.includes(level) ? 'bg-orange text-white' : 'bg-white text-gray-600'
                 }`}
                 onClick={() => {
-                  setJobRequirements((prev) =>
+                  setApplyCondition((prev) =>
                     prev.includes(level) ? prev.filter((req) => req !== level) : [...prev, level]
                   );
                 }}

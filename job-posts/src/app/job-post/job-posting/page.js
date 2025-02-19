@@ -5,18 +5,13 @@ import { useRouter } from 'next/navigation';
 
 export default function JobPostingPage() {
   const router = useRouter();
-  const [title, setTitle] = useState('');
   const [applyCondition, setApplyCondition] = useState([]);
   const [email, setEmail] = useState('');
 
   // 다음 단계로 이동 (등록 성공 페이지)
   const handleNext = (event) => {
     event.preventDefault(); // 기본 동작 방지
-    if (!title) {
-      alert('채용 공고 제목을 입력해 주세요.');
-      return;
-    }
-    else router.push('/job-post/success');
+    router.push('/job-post/success');
   };
 
   return (
@@ -43,22 +38,6 @@ export default function JobPostingPage() {
       <p className="text-sm font-normal text-gray-500 mt-3">공고가 더 잘 전달될 수 있도록 하는 단계예요.</p>
 
       <form onSubmit={handleNext}>
-        {/* 채용 공고 제목 입력 */}
-        <div className="mt-12">
-          <p className="block text-lg font-bold text-gray-600">채용 공고의 제목을 입력해 주세요.&nbsp;
-            <span className="text-red text-lg font-bold">
-              *
-            </span>
-          </p>
-          <input
-            type="text"
-            placeholder="채용 공고 제목을 입력해 주세요."
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full p-3 border border-gray-200 rounded-[9px] mt-2 focus:outline-none focus:ring-2 focus:ring-orange"
-          />
-        </div>
-
         {/* 지원조건 선택 */}
         <div className="mt-12">
           <div>

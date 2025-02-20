@@ -2,7 +2,7 @@
 
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import CheckIcon from '@/components/CheckIcon';
+import CheckIcon from '@/components/checkIcon';
 
 export default function CertificationPage() {
   const router = useRouter();
